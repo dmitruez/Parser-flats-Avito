@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
-
+import json
 
 
 
@@ -14,3 +14,15 @@ class Parser:
 	
 	def get_url(self, driver: webdriver.Chrome):
 		driver.get(self.URL)
+		
+		
+	@staticmethod
+	def start_pars(driver: webdriver.Chrome):
+		html = driver.page_source
+		soup = Bs(html, 'lxml')
+		
+		blok = soup.find('div', class_="items-items-kAJAg")
+		elements = blok.select('.items-items-kAJAg > div')
+		flats = list(map(lambda m: m if len(m.text) > 1 else elements.pop(elements.index(m)), elements))
+		
+		return flats

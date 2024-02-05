@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.options import Options
 import json
 
 
@@ -26,3 +25,11 @@ class Parser:
 		flats = list(map(lambda m: m if len(m.text) > 1 else elements.pop(elements.index(m)), elements))
 		
 		return flats
+	
+	@staticmethod
+	def new_page(driver: webdriver.Chrome, wait: WebDriverWait):
+		driver.execute_script("window.scrollTo(0, document.body.scrollHeight - 1700);")
+		wait.until(ec.visibility_of_element_located((By.XPATH, "//a[@data-marker='pagination-button/nextPage']")))
+		button_next = driver.find_element(By.XPATH, "//a[@data-marker='pagination-button/nextPage']")
+		button_next.click()
+		

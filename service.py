@@ -22,4 +22,4 @@ class Service:
 					
 				data[flat.href] = data_flat
 			
-			json.dump(data, f, ensure_ascii=False)
+			json.dump(data, f, ensure_ascii=False, indent=2)
